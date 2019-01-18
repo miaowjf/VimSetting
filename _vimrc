@@ -82,3 +82,33 @@ func SkipCRPair()
 endfunc  
 " 将tab键绑定为跳出括号  
 inoremap <CR> <c-r>=SkipCRPair()<CR>
+    """"""""""""""""""""""
+    "Quickly Run
+    """"""""""""""""""""""
+    map <F5> :call CompileRunGcc()<CR>;
+    func! CompileRunGcc()
+        exec "w"
+if &filetype == 'c'
+            exec "!g++ % -o %<"
+            exec "!time ./%<"
+elseif &filetype == 'cpp'
+            exec "!g++ % -o %<"
+            exec "!time ./%<"
+elseif &filetype == 'java'
+            exec "!javac %"
+            exec "!time java %<"
+elseif &filetype == 'sh'
+            :!time bash %
+elseif &filetype == 'python'
+            exec "!python %"
+elseif &filetype == 'html'
+            exec "!firefox % &;"
+elseif &filetype == 'go'
+    "        exec "!go build %<"
+            exec "!time go run %"
+elseif &filetype == 'mkd'
+            exec "!~/.vim/markdown.pl % > %.html &"
+            exec "!firefox %.html &"
+endif
+    endfunc
+
